@@ -34,6 +34,12 @@ export default function Skills() {
         <ul className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 md:grid-cols-4">
           {SKILLS.map(({ name, icon }) => {
             const Icon = ICON_MAP[icon];
+            if (!Icon) {
+              console.warn(
+                `No icon mapped for key "${icon}" (skill: "${name}"). ` +
+                  "Add it to ICON_MAP in Skills.jsx."
+              );
+            }
             return (
               <li
                 key={`${name}-${icon}`}

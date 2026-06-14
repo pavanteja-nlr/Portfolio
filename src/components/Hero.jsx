@@ -19,7 +19,8 @@ export default function Hero() {
       a.click();
       a.remove();
       URL.revokeObjectURL(blobUrl);
-    } catch {
+    } catch (err) {
+      console.error("Resume download failed, opening in new tab:", err);
       window.open(path, "_blank", "noopener,noreferrer");
     }
   }, []);
@@ -40,7 +41,10 @@ export default function Hero() {
               alt={SITE.name}
               width={160}
               height={160}
-              onError={() => setPhotoFailed(true)}
+              onError={(e) => {
+                console.warn("Profile photo failed to load:", e.target.src);
+                setPhotoFailed(true);
+              }}
               className="h-32 w-32 rounded-full border-4 border-slate-700 object-cover shadow-2xl shadow-black/40 ring-2 ring-accent/40 sm:h-40 sm:w-40"
             />
           </div>
