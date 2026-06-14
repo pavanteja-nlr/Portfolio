@@ -1,5 +1,38 @@
+import { useState, useCallback } from "react";
 import { ExternalLink, Github, Layers } from "lucide-react";
 import { PROJECTS } from "../data";
+
+function ProjectImage({ src, alt }) {
+  const [failed, setFailed] = useState(false);
+
+  const handleError = useCallback(
+    (e) => {
+      console.warn("Project image failed to load:", e.target.src);
+      setFailed(true);
+    },
+    []
+  );
+
+  if (failed) {
+    return (
+      <div className="mt-6 flex items-center gap-3 rounded-xl border border-dashed border-slate-700 bg-surface/50 px-4 py-8 text-center text-sm text-slate-500">
+        <Layers className="mx-auto h-8 w-8 shrink-0 text-slate-600" />
+        <p className="flex-1">Image failed to load.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-6 overflow-hidden rounded-xl border border-slate-800">
+      <img
+        src={src}
+        alt={alt}
+        onError={handleError}
+        className="w-full object-cover"
+      />
+    </div>
+  );
+}
 
 export default function Projects() {
   return (
@@ -78,13 +111,10 @@ export default function Projects() {
                 </ul>
 
                 {project.image ? (
-                  <div className="mt-6 overflow-hidden rounded-xl border border-slate-800">
-                    <img
-                      src={project.image}
-                      alt={`${project.title} screenshot`}
-                      className="w-full object-cover"
-                    />
-                  </div>
+                  <ProjectImage
+                    src={project.image}
+                    alt={`${project.title} screenshot`}
+                  />
                 ) : (
                   <div className="mt-6 flex items-center gap-3 rounded-xl border border-dashed border-slate-700 bg-surface/50 px-4 py-8 text-center text-sm text-slate-500">
                     <Layers className="mx-auto h-8 w-8 shrink-0 text-slate-600" />
