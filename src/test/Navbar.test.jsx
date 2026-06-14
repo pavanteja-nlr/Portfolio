@@ -44,17 +44,15 @@ describe("Navbar", () => {
     // Open menu
     await user.click(screen.getByRole("button", { name: /open menu/i }));
 
-    // Click a mobile link
+    // Click a mobile link — after open, there are duplicate "About" links
+    // (desktop + mobile); clicking either triggers setOpen(false)
     const mobileLinks = screen.getAllByText("About");
-    const mobileLink = mobileLinks.find((el) =>
-      el.closest(".md\\:hidden, [class*='md:hidden']")
-    );
-    if (mobileLink) {
-      await user.click(mobileLink);
-      // Menu should close, button label should revert
-      expect(
-        screen.getByRole("button", { name: /open menu/i })
-      ).toBeInTheDocument();
-    }
+    expect(mobileLinks.length).toBeGreaterThanOrEqual(2);
+    await user.click(mobileLinks[mobileLinks.length - 1]);
+
+    // Menu should close, button label should revert
+    expect(
+      screen.getByRole("button", { name: /open menu/i })
+    ).toBeInTheDocument();
   });
 });
