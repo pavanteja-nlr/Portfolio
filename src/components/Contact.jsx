@@ -1,5 +1,7 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 import { SITE } from "../data";
+import SectionShell from "./SectionShell";
+import SectionHeading from "./SectionHeading";
 
 const items = [
   {
@@ -24,19 +26,16 @@ const items = [
 
 export default function Contact() {
   return (
-    <section
+    <SectionShell
       id="contact"
-      className="scroll-mt-24 border-t border-slate-800/80 bg-surface-card/30 px-4 py-20 sm:px-6"
+      className="border-t border-slate-800/80 bg-surface-card/30"
     >
-      <div className="mx-auto max-w-3xl text-center">
-        <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
-          Contact
-        </h2>
-        <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-accent" />
-        <p className="mx-auto mt-6 max-w-lg text-slate-400">
-          Recruiters and collaborators: reach out anytime. I respond fastest on
-          LinkedIn and email.
-        </p>
+      <div className="text-center">
+        <SectionHeading
+          title="Contact"
+          center
+          subtitle="Recruiters and collaborators: reach out anytime. I respond fastest on LinkedIn and email."
+        />
 
         <div className="mt-12 flex flex-col items-stretch gap-4 sm:mx-auto sm:max-w-md">
           {items.map(({ label, href, icon: Icon, display }) => (
@@ -62,6 +61,6 @@ export default function Contact() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionShell>
   );
 }
